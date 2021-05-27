@@ -5,7 +5,10 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+
     this.userPath = "/api/user";
+    this.authPath = "/api/auth";
+
     // Database connection
     this.databaseConnection();
     // Middlewares
@@ -29,6 +32,7 @@ class Server {
     this.app.use(express.static("public"));
   }
   routes() {
+    this.app.use(this.authPath, require("../routes/auth"));
     this.app.use(this.userPath, require("../routes/user"));
   }
   listen() {
